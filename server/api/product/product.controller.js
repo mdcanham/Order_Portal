@@ -54,6 +54,14 @@ exports.destroy = function(req, res) {
   });
 };
 
+// Get a list of all availabe categories
+exports.getCategories = function(req, res) {
+  Product.distinct('category', function (err, categories) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(categories);
+  });
+};
+
 function handleError(res, err) {
   return res.status(500).send(err);
 }
