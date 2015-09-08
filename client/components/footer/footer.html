@@ -1,0 +1,11 @@
+<footer class="footer" ng-controller="FooterCtrl">
+  <div class="row">
+    <p>Made with &#10084; in {{location}} by {{author}}.</p>
+    <div ng-repeat="link in socialLinks" class="container">
+      <a href="{{link.url}}">
+        <img src="{{link.image}}" width="30px" />
+        <p>{{link.title}}</p>
+      </a>
+    </div>
+  </div>
+</footer>
