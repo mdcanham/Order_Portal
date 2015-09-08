@@ -12,7 +12,7 @@ Product.find({}).remove(function() {
   Product.create({
     name: 'Garden hose 5m',
     info: 'A 5 metre long garden hose. Perfect for a small home.',
-    category: 'Home and garden',
+    category: 'Home and Garden',
     price: 53,
     active: true
   }, {
