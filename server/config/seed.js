@@ -39,7 +39,15 @@ Product.find({}).remove(function() {
     category: 'Clothing',
     price: 23,
     active: true
-  },{
+  },
+  {
+    name : 'Nike Free Run',
+    info : 'The next generation in footware technology.',
+    category : 'Footware',
+    price : 120.25,
+    active : true
+  },
+  {
     name : 'Business Socks',
     info : 'A pair of plain black business socks. An essential part of every formal outfit.',
     category: 'Clothing',
