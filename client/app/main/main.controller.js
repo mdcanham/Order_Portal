@@ -1,22 +1,71 @@
 'use strict';
 
 angular.module('orderPortalApp')
-  .controller('MainCtrl', function ($scope, $http) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', function ($scope, $http, $location) {
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
+    $scope.categories = [];
+    $scope.products = [];
+
+    var loadCategories = $http.get('/api/products/getCategories').success(function(categories){
+      $scope.categories = categories;
     });
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
+    var loadProducts = $http.get('/api/products').success(function(products) {
+      $scope.products = products;
+      for(var i = 0; i < $scope.products.length; i++){
+        $scope.products[i].quantity = 0;
+      }
+    });
+
+    function resetProductQuantity(){
+      for(var i = 0; i < $scope.products.length; i++){
+        $scope.products[i].quantity = 0;
+      }
+    }
+
+    loadCategories;
+    loadProducts;
+    resetProductQuantity();
+
+    $scope.addProduct = function() {
+      if($scope.newProduct === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
+      $http.post('/api/products', { name: $scope.newProduct });
+      $scope.newProduct = '';
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.deleteProduct = function(product) {
+      $http.delete('/api/products/' + product._id);
+    };
+
+    $scope.order = function(form){
+      $scope.submitted = true;
+      $scope.sent = false;
+      $scope.error = false;
+      $scope.nothingEntered = false;
+      var orderArray = [];
+      var emptyCount = 0;
+      orderArray = JSON.parse(JSON.stringify($scope.products));
+
+      if(form.$valid) {
+        for(var i = 0; i < orderArray.length; i++){
+          if(orderArray[i].quantity < 1){
+            delete orderArray[i];
+            emptyCount++;
+          }
+        }
+
+        if(orderArray.length > emptyCount){
+          $http.post('/api/products/order', orderArray);
+          $scope.sent = true;
+        } else {
+          $scope.nothingEntered = true;
+        }
+
+        resetProductQuantity();
+      } else {
+        $scope.error = true;
+      }
     };
   });
