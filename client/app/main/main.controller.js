@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('orderPortalApp')
-  .controller('MainCtrl', function ($scope, $http, $location) {
+  .controller('MainCtrl', function ($scope, $http, $location, Auth) {
 
     $scope.categories = [];
     $scope.products = [];
@@ -46,17 +46,19 @@ angular.module('orderPortalApp')
       $scope.nothingEntered = false;
       var orderArray = [];
       var emptyCount = 0;
+
       orderArray = JSON.parse(JSON.stringify($scope.products));
 
       if(form.$valid) {
         for(var i = 0; i < orderArray.length; i++){
           if(orderArray[i].quantity < 1){
-            delete orderArray[i];
             emptyCount++;
           }
         }
 
-        if(orderArray.length > emptyCount){
+        orderArray.unshift(Auth.getCurrentUser());
+
+        if(orderArray.length - 1 > emptyCount){
           $http.post('/api/products/order', orderArray);
           $scope.sent = true;
         } else {

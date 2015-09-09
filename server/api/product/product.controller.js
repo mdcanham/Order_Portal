@@ -64,7 +64,36 @@ exports.getCategories = function(req, res) {
 
 //Place an order
 exports.order = function(req, res) {
+  var nodemailer = require('nodemailer');
+  var user = req.body[0];
+
   console.log(req.body);
+  var orderString = 'Hi ' + user.name + ',\n\nYou have ordered the following products:\n\n';
+
+  for(var i = 1; i < req.body.length; i++){
+    var currentProduct = req.body[i];
+    if(currentProduct.quantity > 0){
+      orderString += req.body[i].quantity + ' x ' + req.body[i].name + '\n';
+    }
+  }
+
+  orderString += '\nThank you for placing an order with us, we\'ll be in touch soon with an invoice and estimated delivery dates.'
+
+  console.log(orderString);
+
+  var transporter = nodemailer.createTransport({
+      service: 'Zoho',
+      auth: {
+          user: process.env.ZOHO_EMAIL,
+          pass: process.env.ZOHO_PASSWORD
+      }
+  });
+  transporter.sendMail({
+      from: process.env.ZOHO_EMAIL,
+      to: user.email,
+      subject: 'hello',
+      text: orderString
+  });
 };
 
 
