@@ -62,6 +62,12 @@ exports.getCategories = function(req, res) {
   });
 };
 
+//Place an order
+exports.order = function(req, res) {
+  console.log(req.body);
+};
+
+
 function handleError(res, err) {
   return res.status(500).send(err);
 }
