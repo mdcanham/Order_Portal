@@ -90,6 +90,12 @@ exports.order = function(req, res) {
       to: user.email,
       subject: 'hello',
       text: orderString
+  }, function(error, info){
+    if(error) {
+      res.send(500);
+    } else {
+      res.send(200);
+    }
   });
 };
 
