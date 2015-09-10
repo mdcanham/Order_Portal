@@ -67,7 +67,6 @@ exports.order = function(req, res) {
   var nodemailer = require('nodemailer');
   var user = req.body[0];
 
-  console.log(req.body);
   var orderString = 'Hi ' + user.name + ',\n\nYou have ordered the following products:\n\n';
 
   for(var i = 1; i < req.body.length; i++){
@@ -78,8 +77,6 @@ exports.order = function(req, res) {
   }
 
   orderString += '\nThank you for placing an order with us, we\'ll be in touch soon with an invoice and estimated delivery dates.'
-
-  console.log(orderString);
 
   var transporter = nodemailer.createTransport({
       service: 'Zoho',
