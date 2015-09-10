@@ -23,8 +23,8 @@ angular.module('orderPortalApp')
       }
     }
 
-    loadCategories();
-    loadProducts();
+    loadCategories;
+    loadProducts;
     resetProductQuantity();
 
     $scope.addProduct = function() {
