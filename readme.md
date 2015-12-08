@@ -4,7 +4,7 @@ This is a project that I have been working on as a prototype supplier ordering s
 
 The project is far from complete however it is a solid proof of concept and will be used to determine whether or not to go ahead with further development.
 
-A live demo of the project can be found at [example.canham.nz:9000](http://104.131.33.193:9000/).
+A live demo of the project can be found at [example.canham.nz:9000](http://104.131.33.193:9000/). (Not currently active)
 
 To play around with the code yourself clone this repo and run the following commands:
 
